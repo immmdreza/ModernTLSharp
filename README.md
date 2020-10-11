@@ -7,172 +7,66 @@ this project is a port of _[TLSharp](https://github.com/sochix/TLSharp)_
 
 * Changed target framework to .Net Core 3.1
 * Added Some extension methods and classes:
-  * **`UpdateDispatcher`** (_This can help you receive updates immediately and returns `TLDifference`_).
+  * **`UpdateCatcher`** (_This can help you receive updates immediately and returns `TLDifference`_).
   * **`SendTextMessages`** (_Can be useful to sent text messages to supergroups and private chats easily_)
   * **`MakeSeen`** (_To mark messages history readed_)
   * Something more soon...
   
 ## Install
 
-| _Package Manager_                                | _.Net Cli_                                           |
-|:-------------------------------------------------|:-----------------------------------------------------|
-| _`Install-Package ModernTlSharp -Version 1.1.1`_ | _`dotnet add package ModernTlSharp --version 1.1.1`_ |
+| _Package Manager_                              | _.Net Cli_                                         |
+|:-----------------------------------------------|:---------------------------------------------------|
+| `Install-Package ModernTlSharp -Version 1.2.4` | `dotnet add package ModernTlSharp --version 1.2.4` |
 
 * _[Nuget page](https://www.nuget.org/packages/ModernTlSharp/)_
 
 ## Usage
 
-After authorization you can call _`UpdateCatcher`_ extension method and pass a callback function to handle `Update (TLDifference)` (here is _UpdateCatched_).
+After authorization you can call _`UpdateCatcher`_ extension method and pass a callback function to handle `Update (A of class of TLDifference)` (here is _UpdateCatched_).
 
-Also I add a _MessageHandler_ method it easier to work with `Updates`. you should change it depending on your need... (here we can handle texts from private and super-group chats in _`MessageHandler`_).
+Also I add a _MessageHandler_ method it easier to work with `Update`. you should change it depending on your need... (here we can handle texts from private and super-group chats in _`MessageHandler`_).
 
+**Update object contains every new updates that catched from telegram.**
+
+There is an example in project files (_ModernTLSharp.Test_)
+
+### Example
+
+#### ConsoleAuthocate:
 ```cs
-using ModernTlSharp.TLSharp.Core;
-using ModernTlSharp.TLSharp.Extensions;
-using ModernTlSharp.TLSharp.Extensions.Types;
-using ModernTlSharp.TLSharp.Tl.TL;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+//var auth = new ModernTlSharp.TLSharp.Extensions.Authorization(TelegramClient,
+//    "+12345678998");
 
-namespace ModernTLSharp.Test
+//await auth.ConsoleAuthocate();
+
+Authorization auth = new ModernTlSharp.TLSharp.Extensions.Authorization(TelegramClient);
+
+await auth.ConsoleAuthocate();
+```
+
+#### UpdateCatcher:
+```cs
+static async Task Main()
 {
-    class Program
-    {
-        /// <summary>
-        /// YOUR_API_KEY
-        /// </summary>
-        private static readonly int API_ID = 1234567;
-        /// <summary>
-        /// YOUR_API_HASH
-        /// </summary>
-        private static readonly string API_HASH = "YOUR_API_HASH";
-        /// <summary>
-        /// YOUR_PHONE_NUMBER
-        /// </summary>
-        private static readonly string PHONE_NUMBER = "YOUR_PHONE_NUMBER";
+    TelegramClient = new TelegramClient(API_ID, API_HASH);
 
-        public static TelegramClient TelegramClient { get; private set; }
+    await TelegramClient.ConnectAsync();
 
-        static async Task Main()
-        {
-            TelegramClient = new TelegramClient(API_ID, API_HASH);
+    //var auth = new ModernTlSharp.TLSharp.Extensions.Authorization(TelegramClient,
+    //    "+12345678998");
 
-            await TelegramClient.ConnectAsync();
+    //await auth.ConsoleAuthocate();
 
-            {.. Authorization ..}
-            
-            Console.WriteLine("reading messages");
+    Authorization auth = new ModernTlSharp.TLSharp.Extensions.Authorization(TelegramClient);
 
-            await TelegramClient.UpdateCatcher(UpdateCatched);
-        }
+    await auth.ConsoleAuthocate();
 
-        private static async Task UpdateCatched(Update update)
-        {
-            try
-            {
-                foreach (TLAbsUpdate otherUpdate in update.Updates)
-                {
-                    switch (otherUpdate)
-                    {
-                        case TLUpdateNewChannelMessage newChannelMessage:
-                            {
-                                TLMessage message = (TLMessage)newChannelMessage.Message;
-                                TLPeerChannel chnl = (TLPeerChannel)message.ToId;
-
-                                TLChannel chat = update.Chats.Cast<TLChannel>()
-                                    .FirstOrDefault(x => x.Id == chnl.ChannelId);
-
-                                TLUser sender = update.Users.Cast<TLUser>()
-                                    .FirstOrDefault(x => x.Id == message.FromId);
-
-                                await MessageHandler(new Message
-                                {
-                                    TLChannel = chat,
-                                    TLMessage = message,
-                                    TLUser = sender
-                                }).ConfigureAwait(false);
-
-                                break;
-                            }
-                        default:
-                            break;
-                    }
-                }
-
-                foreach (TLAbsMessage item in update.Messages)
-                {
-                    TLMessage message = (TLMessage)item;
-
-                    TLUser sender = update.Users.Cast<TLUser>()
-                        .FirstOrDefault(x => x.Id == message.FromId);
-
-                    await MessageHandler(new Message
-                    {
-                        TLMessage = message,
-                        TLUser = sender
-                    }).ConfigureAwait(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);            
-            }
-        }
-
-        private static async Task<bool> MessageHandler(Message message)
-        {
-            switch (message)
-            {
-                case { TLChannel: { } channel }:
-                    {
-                        if (message.TLMessage.Message.ToLower() == "/ping")
-                        {
-                            _ = await channel.SendTextMessageAsync(
-                                telegramClient: TelegramClient,
-                                text: "pong",
-                                replyToMessageId: message.TLMessage.Id
-                            );
-
-                            await TelegramClient.MakeSeenChannel(message.TLChannel.Id,
-                                message.TLChannel.AccessHash.Value, message.TLMessage.Id);
-                        }
-
-                        return true;
-                    }
-
-                default:
-                    {
-                        string text = message.TLMessage
-                            .Message
-                            .Split(' ')[0]
-                            .ToLower();
-
-                        switch (text)
-                        {
-                            case "hi":
-                                {
-                                    _ = await TelegramClient.SendTextMessageAsync(
-
-                                        userId: message.TLUser.Id,
-                                        text: "Hi there!",
-                                        replyToMessageId: message.TLMessage.Id
-                                    );
-
-                                    await TelegramClient.MakeSeenUser(message.TLUser.Id,
-                                        (long)message.TLUser.AccessHash, message.TLMessage.Id);
-
-                                    return true;
-                                }
-
-                            default:
-                                return false;
-                        }
-                    }
-            }
-        }
-    }
+    await TelegramClient.UpdateCatcher(UpdateCatched);
 }
 
-
+private static async Task UpdateCatched(Update arg)
+{
+    //handel updates here!
+}
 ```
+
