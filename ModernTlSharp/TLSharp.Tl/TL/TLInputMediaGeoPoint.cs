@@ -1,0 +1,30 @@
+using System.IO;
+namespace ModernTlSharp.TLSharp.Tl.TL
+{
+    [TLObject(-104578748)]
+    public class TLInputMediaGeoPoint : TLAbsInputMedia
+    {
+        public override int Constructor => -104578748;
+
+        public TLAbsInputGeoPoint GeoPoint { get; set; }
+
+
+        public void ComputeFlags()
+        {
+
+        }
+
+        public override void DeserializeBody(BinaryReader br)
+        {
+            GeoPoint = (TLAbsInputGeoPoint)ObjectUtils.DeserializeObject(br);
+
+        }
+
+        public override void SerializeBody(BinaryWriter bw)
+        {
+            bw.Write(Constructor);
+            ObjectUtils.SerializeObject(GeoPoint, bw);
+
+        }
+    }
+}

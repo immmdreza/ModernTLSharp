@@ -1,0 +1,9 @@
+C:\Users\lenovo\source\repos\ModernTlSharp\ModernTlSharp\bin\Release\netstandard2.0\ModernTlSharp.deps.json
+C:\Users\lenovo\source\repos\ModernTlSharp\ModernTlSharp\bin\Release\netstandard2.0\ModernTlSharp.dll
+C:\Users\lenovo\source\repos\ModernTlSharp\ModernTlSharp\bin\Release\netstandard2.0\ModernTlSharp.pdb
+C:\Users\lenovo\source\repos\ModernTlSharp\ModernTlSharp\obj\Release\netstandard2.0\ModernTlSharp.csprojAssemblyReference.cache
+C:\Users\lenovo\source\repos\ModernTlSharp\ModernTlSharp\obj\Release\netstandard2.0\ModernTlSharp.AssemblyInfoInputs.cache
+C:\Users\lenovo\source\repos\ModernTlSharp\ModernTlSharp\obj\Release\netstandard2.0\ModernTlSharp.AssemblyInfo.cs
+C:\Users\lenovo\source\repos\ModernTlSharp\ModernTlSharp\obj\Release\netstandard2.0\ModernTlSharp.csproj.CoreCompileInputs.cache
+C:\Users\lenovo\source\repos\ModernTlSharp\ModernTlSharp\obj\Release\netstandard2.0\ModernTlSharp.dll
+C:\Users\lenovo\source\repos\ModernTlSharp\ModernTlSharp\obj\Release\netstandard2.0\ModernTlSharp.pdb

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "AmSp7c9Jc0uRQqiGuSq4/SAwIwIMoRk+2B647eoCDPJTdqoJm6T2gO82gNQUcGLxK0K8jOMGYlsQFNjzlLdHzA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\lenovo\\source\\repos\\ModernTlSharp\\ModernTlSharp\\ModernTlSharp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lenovo\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

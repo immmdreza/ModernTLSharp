@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ModernTlSharp</id>
+    <version>1.1.3</version>
+    <authors>Immmdreza</authors>
+    <owners>Immmdreza</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .Net Core 3.1 copy of TLSharp with extensions for easier use...</description>
+    <tags>Telegram Client Api TLSharp</tags>
+    <repository url="https://github.com/immmdreza/ModernTlSharp" />
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="Newtonsoft.Json" version="12.0.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\lenovo\source\repos\ModernTlSharp\ModernTlSharp\bin\Release\netcoreapp3.1\ModernTlSharp.dll" target="lib\netcoreapp3.1\ModernTlSharp.dll" />
+  </files>
+</package>
