@@ -16,7 +16,7 @@ this project is a port of _[TLSharp](https://github.com/sochix/TLSharp)_
 
 | _Package Manager_                              | _.Net Cli_                                         |
 |:-----------------------------------------------|:---------------------------------------------------|
-| `Install-Package ModernTlSharp -Version 1.2.1` | `dotnet add package ModernTlSharp --version 1.2.1` |
+| `Install-Package ModernTlSharp -Version 1.2.4` | `dotnet add package ModernTlSharp --version 1.2.4` |
 
 * _[Nuget page](https://www.nuget.org/packages/ModernTlSharp/)_
 
